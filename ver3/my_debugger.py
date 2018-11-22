@@ -95,8 +95,7 @@ class debugger():
             #print("[*] Executed if")
             thread_entry.dwSize = sizeof(thread_entry)
             success = kernel32.Thread32First(snapshot, byref(thread_entry))
-            print(bytes(self.pid))
-            print(type(self.pid))
+            #print(self.pid)
             pid = int.from_bytes(bytes(self.pid), 'little')
 
             while success:
@@ -113,12 +112,17 @@ class debugger():
     def get_thread_context(self, thread_id=None, h_thread=None):
         context = CONTEXT()
         context.ContextFlags = CONTEXT_FULL | CONTEXT_DEBUG_REGISTERS
+        #print("type:{}, num:{}, bytes:{}".format(type(thread_id), thread_id, thread_id.to_bytes(4, 'big')))
+        #print("0x%08x" % thread_id)
+        #thread_id = thread_id.to_bytes(4, 'big')
 
         if h_thread is None:
-            print("[*] Thread is None")
             h_thread = self.open_thread(thread_id)
-        if kernel32.GetThreadContext(h_thread, byref(context)):
-            print("[*] GetThreadData")
+            #print(h_thread)
+        tmp = kernel32.GetThreadContext(h_thread, byref(context))
+        print(tmp)
+        if tmp != 0:
+            #print("0x%08x" % context.Eax)
             kernel32.CloseHandle(h_thread)
             return context
         else:

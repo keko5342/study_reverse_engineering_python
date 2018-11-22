@@ -15,16 +15,18 @@ if list is False:
 #    print(list)
 
 for thread in list:
-    thread_context = debugger.get_thread_context(thread)
+    context = debugger.get_thread_context(thread)
 
     print("[*] Dumping regisers for thread ID: 0x%08x" % thread)
-    print("[**] EIP: 0x%08x" % thread_context.Eip)
-    print("[**] ESP: 0x%08x" % thread_context.Esp)
-    print("[**] EBP: 0x%08x" % thread_context.Ebp)
-    print("[**] EAX: 0x%08x" % thread_context.Eax)
-    print("[**] EBX: 0x%08x" % thread_context.Ebx)
-    print("[**] ECX: 0x%08x" % thread_context.Ecx)
-    print("[**] EDX: 0x%08x" % thread_context.Edx)
+    print("[Rip]0x{:016X}".format(context.Rip))
+    print("[Rax]0x{:016X}".format(context.Rax))
+    print("[Rcx]0x{:016X}".format(context.Rcx))
+    print("[Rdx]0x{:016X}".format(context.Rdx))
+    print("[Rbx]0x{:016X}".format(context.Rbx))
+    print("[Rsp]0x{:016X}".format(context.Rsp))
+    print("[Rbp]0x{:016X}".format(context.Rsp))
+    print("[Rsi]0x{:016X}".format(context.Rsi))
+    print("[Rdi]0x{:016X}".format(context.Rdi))
     print("[*] END DUMP")
 
 debugger.detach()
